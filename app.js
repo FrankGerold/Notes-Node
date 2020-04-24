@@ -2,7 +2,7 @@
 // fs.writeFileSync('notes.txt', '420 blaze it!')
 
 const notes = require('./notes.js');
-const validator = require('validator')
+// const validator = require('validator')
 // import validator from 'validator';
 const chalk = require('chalk')
 const yargs = require('yargs')
@@ -21,7 +21,9 @@ yargs.version('1.1.0')
 yargs.command({
   command: 'add',
   describe: 'Add a new note!',
-  handler: (argv) => console.log('Adding note!\nTitle:', argv.title, "\nBody: ", argv.body),
+  handler: (argv) => {
+    notes.addNote(argv.title, argv.body)
+  },
   builder: {
     title: {
       describe: 'Note Title',
