@@ -1,7 +1,19 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = () => "Your Notes..."
+const getNotes = () => {
+    const notes = loadNotes()
+
+    console.log(chalk.bgBlue.red("Your Notes:"))
+
+    // for (note of notes) {
+    //     console.log(chalk.bgBlue.red(note.title))
+    // }
+
+    notes.forEach(note => console.log(chalk.bgBlue.red(note.title)))
+
+    console.log('To read a note, use the \'read\' command!')
+}
 
 const addNote = (title, body) => {
     const notes = loadNotes()
@@ -18,8 +30,6 @@ const addNote = (title, body) => {
             ...notes,
             newNote
         ]
-
-        console.log("Notes:", notes, typeof notes, "\nNew Note:", newNote, "\nNew Notes:", newNotes)
 
         saveNotes(newNotes)
         console.log(chalk.bgGreen.blue('Note Added!'))
@@ -45,8 +55,6 @@ const loadNotes = () => {
 
 const deleteNote = (title) => {
     const notes = loadNotes()
-    // const noteExists = notes.filter(note => note.title === title)
-    // let note = notes.find(note => note.title === title)
 
     if (notes.some(note => note.title === title)) {
        let newNotes = notes.filter(note => note.title !== title)
