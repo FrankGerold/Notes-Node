@@ -2,13 +2,13 @@ const notes = require('./notes.js')
 const chalk = require('chalk')
 const yargs = require('yargs')
 
-console.log(chalk.bgRed.blue('Welcome to Node Note APp!'))
+console.log(chalk.bgRed.cyan('Welcome to Shitty Node Note App!'))
 
 // add command
 yargs.command({
   command: 'add',
   describe: 'Add a new note!',
-  handler: (argv) => notes.addNote(argv.title, argv.body),
+  handler: argv => notes.addNote(argv.title, argv.body),
   builder: {
     title: {
       describe: 'Note Title',
@@ -53,8 +53,16 @@ yargs.command({
   command: 'read',
   alias: 'r',
   describe: 'Read a note',
-  handler: () => console.log('reading note now:')
+  handler: argv => notes.readNote(argv.title),
+  builder: {
+    title: {
+      describe: 'Title of note',
+      demandOption: true,
+      type: 'string',
+      alias: 't'
+    }
+  }
 })
 
-
+// yarg needs to call argv somewhere to parse at all
 yargs.argv;

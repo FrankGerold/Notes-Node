@@ -4,13 +4,13 @@ const chalk = require('chalk')
 const getNotes = () => {
     const notes = loadNotes()
 
-    console.log(chalk.bgBlue.red("Your Notes:"))
+    console.log(chalk.blue("Your Notes:"))
 
     // for (note of notes) {
     //     console.log(chalk.bgBlue.red(note.title))
     // }
 
-    notes.forEach(note => console.log(chalk.bgBlue.red(note.title)))
+    notes.forEach(note => console.log(chalk.blue(note.title)))
 
     console.log('To read a note, use the \'read\' command!')
 }
@@ -32,10 +32,24 @@ const addNote = (title, body) => {
         ]
 
         saveNotes(newNotes)
-        console.log(chalk.bgGreen.blue('Note Added!'))
+        console.log(chalk.green('Note Added!'))
     } else {
-        console.log(chalk.bgRed.green('Note Title Taken'))
+        console.log(chalk.red('Note Title Taken'))
     }
+}
+
+const readNote = (title) => {
+    const notes = loadNotes()
+
+    let note = notes.find(note => note.title === title)
+
+    if (note) {
+        console.log(`Note "${note.title}":\n\n${note.body}\n`)
+    }
+    else {
+        console.log(chalk.red(`Sorry, note "${title}" doesn't exist!`))
+    }
+
 }
 
 const saveNotes = (notes) => {
@@ -59,15 +73,16 @@ const deleteNote = (title) => {
     if (notes.some(note => note.title === title)) {
        let newNotes = notes.filter(note => note.title !== title)
         saveNotes(newNotes);
-        console.log(chalk.bgGreen.blue(`Deleted note ${title}!`))
+        console.log(chalk.green(`Deleted note ${title}!`))
     }
     else {
-        console.log(chalk.bgRed.green(`Note ${title} doesn't exist!`))
+        console.log(chalk.red(`Note ${title} doesn't exist!`))
     }
 }
 
 module.exports = {
     getNotes,
     addNote,
-    deleteNote
+    deleteNote,
+    readNote
 }
